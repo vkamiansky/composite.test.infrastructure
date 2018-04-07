@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <DocumentationFile>$(OutputPath)\netstandard2.0\Composite.Test.Infrastructure.xml</DocumentationFile>
+    <IncludeSymbols>true</IncludeSymbols>
+    <IncludeSource>true</IncludeSource>
+    <PackageId>Composite.Test.Infrastructure</PackageId>
+    <Title>Project Composite: Testing Infrastructure</Title>
+    <Version>$(APPVEYOR_BUILD_VERSION)</Version>
+    <Authors>Vitaly Kamiansky, Vladimir Ilin</Authors>
+    <Company>FirstLine Software</Company>
+    <PackageLicenseUrl>https://github.com/vkamiansky/composite.test.infrastructure/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/vkamiansky/composite.test.infrastructure</PackageProjectUrl>
+    <PackageTags>composite;seq;fsharp;enumerable;lazy;sequence;test</PackageTags>
+    <RepositoryUrl>https://github.com/vkamiansky/composite.test.infrastructure.git</RepositoryUrl>
+    <Description>Infrastructure functions helpful in testing the code using Project Composite functions.</Description>
+    <Copyright>Copyright (c) 2018, Vitaly Kamiansky, Vladimir Ilin</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Composite" Version="1.0.55" />
+  </ItemGroup>
+
+</Project>

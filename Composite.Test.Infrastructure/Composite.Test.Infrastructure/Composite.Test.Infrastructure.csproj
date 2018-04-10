@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Composite" Version="1.0.55" />
+    <PackageReference Include="Composite" Version="1.5.2" />
   </ItemGroup>
 
 </Project>

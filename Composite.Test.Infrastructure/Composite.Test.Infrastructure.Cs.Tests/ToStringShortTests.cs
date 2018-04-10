@@ -9,14 +9,14 @@ namespace Composite.Test.Infrastructure.Cs.Tests
         [Fact]
         public void TransformationTest()
         {
-            var inputComposite = C.Composite(new[] {
-                C.Composite(new[]
+            var inputComposite = Composite.Create(new[] {
+                Composite.Create(new[]
                 {
-                    C.Value(new Simple { Number = 1, }),
-                    C.Value(new Simple { Number = 2, }),
-                    C.Value(new Simple { Number = 3, })
+                    Composite.CreateValue(new Simple { Number = 1, }),
+                    Composite.CreateValue(new Simple { Number = 2, }),
+                    Composite.CreateValue(new Simple { Number = 3, })
                 }),
-                C.Value( new Simple { Number = 6, } ),
+                Composite.CreateValue( new Simple { Number = 6, } ),
             });
 
             Assert.Equal("[ [ 1, 2, 3 ], 6 ]", inputComposite.ToStringShort());
@@ -25,14 +25,48 @@ namespace Composite.Test.Infrastructure.Cs.Tests
         [Fact]
         public void TrivialParametersTest()
         {
-            var inputComposite = C.Composite(new Composite<int>[] {});
+            var inputComposite = Composite.Create(new Composite<int>[] {});
             Assert.Equal("[ ]", inputComposite.ToStringShort());
 
-            inputComposite = C.Composite(new[]{C.Value(1)});
+            inputComposite = Composite.Create(new[]{Composite.CreateValue(1)});
             Assert.Equal("[ 1 ]", inputComposite.ToStringShort());
 
-            inputComposite = C.Value(1);
+            inputComposite = Composite.CreateValue(1);
             Assert.Equal("1", inputComposite.ToStringShort());
+        }
+
+        [Fact]
+        public void MarkedTransformationTest()
+        {
+            var inputComposite = MarkedComposite.Create(string.Empty, new[] {
+                MarkedComposite.Create("inner composite", new[]{
+                    MarkedComposite.CreateValue("mark", new Simple { Number = 1, })
+                })
+            });
+
+            Assert.Equal("[ ( inner composite )[ ( mark )1 ] ]", inputComposite.ToStringShort());
+        }
+
+        [Fact]
+        public void MarkedTrivialParametersTest()
+        {
+            var inputComposite = MarkedComposite.Create(string.Empty, new Composite<string,int>[]{});
+            Assert.Equal("[ ]", inputComposite.ToStringShort());
+
+            inputComposite = MarkedComposite.Create("mark", new Composite<string,int>[]{});
+            Assert.Equal("( mark )[ ]", inputComposite.ToStringShort());
+
+            inputComposite = MarkedComposite.Create(string.Empty, new[]{MarkedComposite.CreateValue(string.Empty, 1)});
+            Assert.Equal("[ 1 ]", inputComposite.ToStringShort());
+
+            inputComposite = MarkedComposite.Create(string.Empty, new[]{MarkedComposite.CreateValue("mark", 1)});
+            Assert.Equal("[ ( mark )1 ]", inputComposite.ToStringShort());
+
+            inputComposite = MarkedComposite.CreateValue(string.Empty, 1);
+            Assert.Equal("1", inputComposite.ToStringShort());
+
+            inputComposite = MarkedComposite.CreateValue("mark", 1);
+            Assert.Equal("( mark )1", inputComposite.ToStringShort());
         }
     }
 }
